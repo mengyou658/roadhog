@@ -191,7 +191,6 @@ function runDevServer(host, port, protocol) {
     if (isInteractive) {
       outputMockError();
     }
-  console.log("server url: " + `${protocol}://${host}:${port}/`)
     // openBrowser(`${protocol}://${host}:${port}/`);
   });
 
@@ -205,6 +204,7 @@ function setupWatch(devServer) {
     paths.resolveApp('webpack.config.js'),
   ]
     .concat(typeof rcConfig.theme === 'string' ? paths.resolveApp(rcConfig.theme) : []);
+  console.log(files)
   const watcher = chokidar.watch(files, {
     ignored: /node_modules/,
     persistent: true,
