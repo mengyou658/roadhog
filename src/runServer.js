@@ -191,7 +191,7 @@ function runDevServer(host, port, protocol) {
     if (isInteractive) {
       outputMockError();
     }
-    // openBrowser(`${protocol}://${host}:${port}/`);
+    openBrowser(`${protocol}://${host}:${port}/`);
   });
 
   setupWatch(devServer, port);
