@@ -37,10 +37,10 @@ export default function (config, cwd) {
 
   const output = {
     path: paths.appBuild,
-    filename: '[name].js',
+    filename: (config.assetsPath && config.assetsPath.js ? config.assetsPath.js : 'assets/js/') + '[name].js',
     publicPath,
     libraryTarget,
-    chunkFilename: '[name].async.js',
+    chunkFilename: (config.assetsPath && config.assetsPath.js ? config.assetsPath.js : 'assets/js/') + '[name].async.js',
   };
 
   if (library) output.library = library;
