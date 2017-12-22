@@ -105,7 +105,7 @@ export default function (args, appBuild, config, paths) {
     finalWebpackConfig.module.rules.push(_baseSvgLoader);
   }
 
-  const prodConfig = addExtraBabelIncludes(finalWebpackConfig, paths, config.extraBabelIncludes, babelOptions)
+  const prodConfig = addExtraBabelIncludes(config, finalWebpackConfig, paths, config.extraBabelIncludes, babelOptions)
   console.log(JSON.stringify(prodConfig))
   return prodConfig;
 }
