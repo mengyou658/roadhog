@@ -144,6 +144,14 @@ export default {
   "disableCSSModules": false,
   "cssModulesExclude": [],
   "publicPath": "/",
+  "htmlTemplates": [],
+  "assetsPath": {
+      "media": "assets/media/",
+      "js": "assets/js/",
+      "css": "assets/css/",
+      "img": "assets/images/",
+    },
+  "babelExclude": [],
   "outputPath": "./dist",
   "extraBabelPlugins": [],
   "extraPostCSSPlugins": [],
@@ -199,6 +207,56 @@ export default {
 ### publicPath
 
 配置生产环境的 [publicPath](http://webpack.github.io/docs/configuration.html#output-publicpath)，开发环境下永远为 `/`。
+
+### htmlTemplates
+
+配合多入口应用设置不同的页面，具体配置参考[html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
+示例：
+```js
+{
+"htmlTemplates": [
+    {
+      inject: true,
+      template: 'src/index.ejs',
+      hash: false,
+      favicon: 'public/favicon.ico',
+      filename: 'index.html',
+      chunks: ['index', 'common'],
+    },
+    {
+      inject: true,
+      template: 'src/demo.ejs',
+      hash: false,
+      favicon: 'public/favicon.ico',
+      filename: 'demo.html',
+      chunks: ['demo', 'common'],
+    }
+  ]
+}
+```
+
+### assetsPath
+
+资源输出路径，默认：
+图片资源：assets/img
+css文件：assets/css
+js文件：assets/js
+其他文件: assets/media
+
+```js
+{
+  "assetsPath": {
+      "media": 'assets/media/',
+      "js": 'assets/js/',
+      "css": 'assets/css/',
+      "img": 'assets/images/',
+    },
+}
+```
+
+### babelExclude
+
+用于babel排除文件配置，与extraBabelIncludes相互配合使用
 
 ### outputPath
 
