@@ -39,10 +39,10 @@ export default function (args, appBuild, config, paths) {
 
   const output = {
     path: appBuild,
-    filename: config.publicPath.js + `${jsFileName}.js`,
+    filename: config.assetsPath.js || 'assets/js/'  + `${jsFileName}.js`,
     publicPath,
     libraryTarget,
-    chunkFilename: config.publicPath.js + `${jsFileName}.async.js`,
+    chunkFilename: config.assetsPath.js  || 'assets/js/' + `${jsFileName}.async.js`,
   };
 
   if (library) output.library = library;
@@ -55,7 +55,7 @@ export default function (args, appBuild, config, paths) {
     ...getResolve(config, paths),
     module: {
       rules: [
-        ...getFirstRules({ paths, babelOptions }),
+        ...getFirstRules({ config, paths, babelOptions }),
         ...getCSSRules('production', { config, paths, cssLoaders, theme }),
         ...getLastRules({ paths, babelOptions }),
       ],
@@ -66,7 +66,7 @@ export default function (args, appBuild, config, paths) {
         new webpack.optimize.DedupePlugin(),
       ]),
       new ExtractTextPlugin({
-        filename: config.publicPath.css + `${cssFileName}.css`,
+        filename: config.assetsPath.css || 'assets/css/'  + `${cssFileName}.css`,
         allChunks: true,
       }),
       ...getCommonPlugins({

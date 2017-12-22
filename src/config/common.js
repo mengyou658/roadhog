@@ -30,7 +30,7 @@ export const baseSvgLoader = {
   test: /\.svg$/,
   loader: 'file',
   options: {
-    name: config.publicPath.img + '/[name].[hash:8].[ext]',
+    name: config.assetsPath.img || 'assets/img/' + '/[name].[hash:8].[ext]',
   },
 };
 
@@ -65,7 +65,7 @@ export function getResolve(config, paths) {
   };
 }
 
-export function getFirstRules({ paths, babelOptions }) {
+export function getFirstRules({ config, paths, babelOptions }) {
   return [
     {
       oneOf: [
@@ -74,7 +74,7 @@ export function getFirstRules({ paths, babelOptions }) {
           loader: require.resolve('url-loader'),
           options: {
             limit: 10000,
-            name: config.publicPath.img + '[name].[hash:8].[ext]',
+            name: config.assetsPath.img || 'assets/img/'  + '[name].[hash:8].[ext]',
           },
         },
         {
@@ -89,7 +89,7 @@ export function getFirstRules({ paths, babelOptions }) {
           loader: 'url',
           options: {
             limit: 10000,
-            name: config.publicPath.media + '[name].[hash:8].[ext]',
+            name: config.assetsPath.media || 'assets/media/'  + '[name].[hash:8].[ext]',
           },
         },
         {
