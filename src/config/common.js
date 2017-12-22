@@ -1,7 +1,7 @@
 import webpack from 'webpack';
 import autoprefixer from 'autoprefixer';
-import { existsSync } from 'fs';
-import { join } from 'path';
+import {existsSync} from 'fs';
+import {join} from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -26,12 +26,14 @@ export function getBabelOptions(config) {
   };
 }
 
-export const baseSvgLoader = {
-  test: /\.svg$/,
-  loader: 'file',
-  options: {
-    name: config.assetsPath.img || 'assets/img/' + '/[name].[hash:8].[ext]',
-  },
+export const baseSvgLoader = (config) => {
+  return {
+    test: /\.svg$/,
+    loader: 'file',
+    options: {
+      name: config.assetsPath.img || 'assets/img/' + '/[name].[hash:8].[ext]',
+    },
+  }
 };
 
 export const spriteSvgLoader = {
@@ -65,7 +67,7 @@ export function getResolve(config, paths) {
   };
 }
 
-export function getFirstRules({ config, paths, babelOptions }) {
+export function getFirstRules({config, paths, babelOptions}) {
   return [
     {
       oneOf: [
@@ -74,7 +76,7 @@ export function getFirstRules({ config, paths, babelOptions }) {
           loader: require.resolve('url-loader'),
           options: {
             limit: 10000,
-            name: config.assetsPath.img || 'assets/img/'  + '[name].[hash:8].[ext]',
+            name: config.assetsPath.img || 'assets/img/' + '[name].[hash:8].[ext]',
           },
         },
         {
@@ -89,7 +91,7 @@ export function getFirstRules({ config, paths, babelOptions }) {
           loader: 'url',
           options: {
             limit: 10000,
-            name: config.assetsPath.media || 'assets/media/'  + '[name].[hash:8].[ext]',
+            name: config.assetsPath.media || 'assets/media/' + '[name].[hash:8].[ext]',
           },
         },
         {
@@ -103,7 +105,7 @@ export function getFirstRules({ config, paths, babelOptions }) {
   ];
 }
 
-export function getLastRules({ paths, babelOptions }) {
+export function getLastRules({paths, babelOptions}) {
   return [
     {
       test: /\.html$/,
@@ -131,7 +133,7 @@ export function getLastRules({ paths, babelOptions }) {
   ];
 }
 
-export function getCSSRules(env, { config, paths, cssLoaders, theme }) {
+export function getCSSRules(env, {config, paths, cssLoaders, theme}) {
   function isExclude(modulePath) {
     if (config.cssModulesExclude && config.cssModulesExclude.length) {
       return config.cssModulesExclude.some((item) => {
@@ -289,7 +291,7 @@ export const node = {
   tls: 'empty',
 };
 
-export function getCommonPlugins({ config, paths, appBuild, NODE_ENV }) {
+export function getCommonPlugins({config, paths, appBuild, NODE_ENV}) {
   const ret = [];
 
   let defineObj = {
@@ -314,14 +316,14 @@ export function getCommonPlugins({ config, paths, appBuild, NODE_ENV }) {
       }));
     }
   }
-  if(config.htmlTemplates) {
-      if(config.htmlTemplates === true) {
-        defaultHtml()
-      } else {
-        runArray(config.htmlTemplates, (h) => {
-          ret.push(new HtmlWebpackPlugin(Object.assign({}, h)));
-        })
-      }
+  if (config.htmlTemplates) {
+    if (config.htmlTemplates === true) {
+      defaultHtml()
+    } else {
+      runArray(config.htmlTemplates, (h) => {
+        ret.push(new HtmlWebpackPlugin(Object.assign({}, h)));
+      })
+    }
   } else {
     defaultHtml()
   }

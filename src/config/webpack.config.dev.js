@@ -87,13 +87,14 @@ export default function (config, cwd) {
     node,
   };
 
+  let _baseSvgLoader = baseSvgLoader(config)
   if (config.svgSpriteLoaderDirs) {
-    baseSvgLoader.exclude = config.svgSpriteLoaderDirs;
+    _baseSvgLoader.exclude = config.svgSpriteLoaderDirs;
     spriteSvgLoader.include = config.svgSpriteLoaderDirs;
-    finalWebpackConfig.module.rules.push(baseSvgLoader);
+    finalWebpackConfig.module.rules.push(_baseSvgLoader);
     finalWebpackConfig.module.rules.push(spriteSvgLoader);
   } else {
-    finalWebpackConfig.module.rules.push(baseSvgLoader);
+    finalWebpackConfig.module.rules.push(_baseSvgLoader);
   }
 
   return addExtraBabelIncludes(finalWebpackConfig, paths, config.extraBabelIncludes, babelOptions);
