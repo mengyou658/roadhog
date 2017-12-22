@@ -106,6 +106,5 @@ export default function (args, appBuild, config, paths) {
   }
 
   const prodConfig = addExtraBabelIncludes(config, finalWebpackConfig, paths, config.extraBabelIncludes, babelOptions)
-  console.log(JSON.stringify(prodConfig))
   return prodConfig;
 }
