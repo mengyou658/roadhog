@@ -39,10 +39,10 @@ export default function (args, appBuild, config, paths) {
 
   const output = {
     path: appBuild,
-    filename: `${jsFileName}.js`,
+    filename: config.publicPath.js + `${jsFileName}.js`,
     publicPath,
     libraryTarget,
-    chunkFilename: `${jsFileName}.async.js`,
+    chunkFilename: config.publicPath.js + `${jsFileName}.async.js`,
   };
 
   if (library) output.library = library;
@@ -66,7 +66,7 @@ export default function (args, appBuild, config, paths) {
         new webpack.optimize.DedupePlugin(),
       ]),
       new ExtractTextPlugin({
-        filename: `${cssFileName}.css`,
+        filename: config.publicPath.css + `${cssFileName}.css`,
         allChunks: true,
       }),
       ...getCommonPlugins({
@@ -104,5 +104,7 @@ export default function (args, appBuild, config, paths) {
     finalWebpackConfig.module.rules.push(baseSvgLoader);
   }
 
-  return addExtraBabelIncludes(finalWebpackConfig, paths, config.extraBabelIncludes, babelOptions);
+  const prodConfig = addExtraBabelIncludes(finalWebpackConfig, paths, config.extraBabelIncludes, babelOptions)
+  console.log(JSON.stringify(prodConfig))
+  return prodConfig;
 }

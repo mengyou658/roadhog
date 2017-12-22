@@ -7,6 +7,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import normalizeDefine from '../utils/normalizeDefine';
 import winPath from '../utils/winPath';
+import runArray from "../utils/runArray";
 
 export function getBabelOptions(config) {
   return {
@@ -29,7 +30,7 @@ export const baseSvgLoader = {
   test: /\.svg$/,
   loader: 'file',
   options: {
-    name: 'static/[name].[hash:8].[ext]',
+    name: config.publicPath.img + '/[name].[hash:8].[ext]',
   },
 };
 
@@ -67,26 +68,38 @@ export function getResolve(config, paths) {
 export function getFirstRules({ paths, babelOptions }) {
   return [
     {
-      exclude: [
-        /\.(html|ejs)$/,
-        /\.(js|jsx)$/,
-        /\.(css|less|scss|sass)$/,
-        /\.json$/,
-        /\.svg$/,
-        /\.tsx?$/,
-      ],
-      loader: 'url',
-      options: {
-        limit: 10000,
-        name: 'static/[name].[hash:8].[ext]',
-      },
-    },
-    {
-      test: /\.(js|jsx)$/,
-      include: paths.appSrc,
-      loader: 'babel',
-      options: babelOptions,
-    },
+      oneOf: [
+        {
+          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+          loader: require.resolve('url-loader'),
+          options: {
+            limit: 10000,
+            name: config.publicPath.img + '[name].[hash:8].[ext]',
+          },
+        },
+        {
+          exclude: [
+            /\.(html|ejs)$/,
+            /\.(js|jsx)$/,
+            /\.(css|less|scss|sass)$/,
+            /\.json$/,
+            /\.svg$/,
+            /\.tsx?$/,
+          ],
+          loader: 'url',
+          options: {
+            limit: 10000,
+            name: config.publicPath.media + '[name].[hash:8].[ext]',
+          },
+        },
+        {
+          test: /\.(js|jsx)$/,
+          include: paths.appSrc,
+          loader: 'babel',
+          options: babelOptions,
+        },
+      ]
+    }
   ];
 }
 
@@ -292,12 +305,27 @@ export function getCommonPlugins({ config, paths, appBuild, NODE_ENV }) {
   }
   ret.push(new webpack.DefinePlugin(defineObj));
 
-  if (existsSync(join(paths.appSrc, 'index.ejs'))) {
-    ret.push(new HtmlWebpackPlugin({
-      template: 'src/index.ejs',
-      inject: true,
-    }));
+  // HTML
+  const defaultHtml = function () {
+    if (existsSync(join(paths.appSrc, 'index.ejs'))) {
+      ret.push(new HtmlWebpackPlugin({
+        template: 'src/index.ejs',
+        inject: true,
+      }));
+    }
   }
+  if(config.htmlTemplates) {
+      if(config.htmlTemplates === true) {
+        defaultHtml()
+      } else {
+        runArray(config.htmlTemplates, (h) => {
+          ret.push(new HtmlWebpackPlugin(Object.assign({}, h)));
+        })
+      }
+  } else {
+    defaultHtml()
+  }
+
 
   if (existsSync(paths.appPublic)) {
     ret.push(new CopyWebpackPlugin([
@@ -332,6 +360,7 @@ export function getCommonPlugins({ config, paths, appBuild, NODE_ENV }) {
             'Firefox ESR',
             'not ie < 9', // React doesn't support IE8 anyway
           ],
+          flexbox: 'no-2009',
         }),
         ...(config.extraPostCSSPlugins ? config.extraPostCSSPlugins : []),
       ],

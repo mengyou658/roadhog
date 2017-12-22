@@ -177,6 +177,8 @@ function doneHandler(previousSizeMap, argv, resolve, err, stats) {
     return;
   }
 
+  conole.log((stats.stats || stats).toJson())
+
   runArray(stats.stats || stats, (item) => {
     if (item.compilation.errors.length) {
       printErrors('Failed to compile.', item.compilation.errors);
