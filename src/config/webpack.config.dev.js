@@ -97,5 +97,5 @@ export default function (config, cwd) {
     finalWebpackConfig.module.rules.push(_baseSvgLoader);
   }
 
-  return addExtraBabelIncludes(finalWebpackConfig, paths, config.extraBabelIncludes, babelOptions);
+  return addExtraBabelIncludes(config, finalWebpackConfig, paths, config.extraBabelIncludes, babelOptions);
 }
