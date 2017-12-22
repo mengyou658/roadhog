@@ -343,7 +343,7 @@ export function getCommonPlugins({config, paths, appBuild, NODE_ENV}) {
     const name = config.hash ? 'common.[hash]' : 'common';
     ret.push(new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
-      filename: `${name}.js`,
+      filename: (config.assetsPath && config.assetsPath.js ? config.assetsPath.js : 'assets/js/') + `${name}.js`,
     }));
   }
 
