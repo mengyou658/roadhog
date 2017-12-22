@@ -177,7 +177,7 @@ function doneHandler(previousSizeMap, argv, resolve, err, stats) {
     return;
   }
 
-  conole.log((stats.stats || stats).toJson())
+  console.log((stats.stats || stats).toJson())
 
   runArray(stats.stats || stats, (item) => {
     if (item.compilation.errors.length) {
