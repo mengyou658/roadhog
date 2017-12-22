@@ -9,6 +9,10 @@ export default function getCSSLoaders(config) {
     sourceMap: !config.disableCSSSourceMap,
   };
 
+  if(process.env.NODE_ENV === "production") {
+    baseCSSOptions.minimize =  true
+  }
+
   if (config.disableCSSModules) {
     own.push({
       loader: 'css',
