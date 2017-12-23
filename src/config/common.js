@@ -309,12 +309,7 @@ export function getCommonPlugins({config, paths, appBuild, NODE_ENV}) {
 
   // HTML
   const defaultHtml = function () {
-    if (existsSync(join(paths.appSrc, 'index.ejs'))) {
-      ret.push(new HtmlWebpackPlugin({
-        template: 'src/index.ejs',
-        inject: true,
-      }));
-    }
+    ret.push(new HtmlWebpackPlugin());
   }
   if (config.htmlTemplates) {
     if (config.htmlTemplates === true) {
