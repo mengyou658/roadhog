@@ -1,3 +1,4 @@
+import autoprefixer from 'autoprefixer';
 export default function getCSSLoaders(config) {
   const own = [];
   const nodeModules = [];

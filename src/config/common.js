@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import autoprefixer from 'autoprefixer';
+// import autoprefixer from 'autoprefixer';
 import {existsSync} from 'fs';
 import {join} from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
