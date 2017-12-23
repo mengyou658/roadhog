@@ -1,4 +1,3 @@
-
 export default function getCSSLoaders(config) {
   const own = [];
   const nodeModules = [];
@@ -9,18 +8,18 @@ export default function getCSSLoaders(config) {
     sourceMap: !config.disableCSSSourceMap,
   };
 
-  if(process.env.NODE_ENV === "production") {
-    baseCSSOptions.minimize =  true
+  if (process.env.NODE_ENV === "production") {
+    // baseCSSOptions.minimize = true
   }
 
   if (config.disableCSSModules) {
     own.push({
-      loader: 'css',
+      loader: require.resolve('css-loader'),
       options: baseCSSOptions,
     });
   } else {
     own.push({
-      loader: 'css',
+      loader: require.resolve('css-loader'),
       options: {
         ...baseCSSOptions,
         modules: true,
@@ -29,16 +28,34 @@ export default function getCSSLoaders(config) {
     });
   }
   nodeModules.push({
-    loader: 'css',
+    loader: require.resolve('css-loader'),
     options: baseCSSOptions,
   });
   noCSSModules.push({
-    loader: 'css',
+    loader: require.resolve('css-loader'),
     options: baseCSSOptions,
   });
 
   const postcssLoader = {
-    loader: 'postcss',
+    loader: require.resolve('postcss-loader'),
+    options: {
+      // Necessary for external CSS imports to work
+      // https://github.com/facebookincubator/create-react-app/issues/2677
+      ident: 'postcss',
+      plugins: () => [
+        require('postcss-flexbugs-fixes'),
+        autoprefixer(config.autoprefixer || {
+          browsers: [
+            '>1%',
+            'last 4 versions',
+            'Firefox ESR',
+            'not ie < 9', // React doesn't support IE8 anyway
+          ],
+          flexbox: 'no-2009',
+        }),
+        ...(config.extraPostCSSPlugins ? config.extraPostCSSPlugins : []),
+      ],
+    },
   };
 
   noCSSModules.push(postcssLoader);

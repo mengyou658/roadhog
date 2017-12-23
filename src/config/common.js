@@ -152,7 +152,7 @@ export function getCSSRules(env, {config, paths, cssLoaders, theme}) {
       test: /\.css$/,
       include: includeTest.bind(null, paths.appSrc),
       use: [
-        'style',
+        require.resolve('style-loader'),
         ...cssLoaders.own,
       ],
     },
@@ -174,7 +174,7 @@ export function getCSSRules(env, {config, paths, cssLoaders, theme}) {
       test: /\.css$/,
       include: includeTest.bind(null, paths.appNodeModules),
       use: [
-        'style',
+        require.resolve('style-loader'),
         ...cssLoaders.nodeModules,
       ],
     },
@@ -182,7 +182,7 @@ export function getCSSRules(env, {config, paths, cssLoaders, theme}) {
       test: /\.less$/,
       include: includeTest.bind(null, paths.appNodeModules),
       use: [
-        'style',
+        require.resolve('style-loader'),
         ...cssLoaders.nodeModules,
         {
           loader: 'less',
@@ -203,7 +203,7 @@ export function getCSSRules(env, {config, paths, cssLoaders, theme}) {
         test: /\.css$/,
         include,
         use: [
-          'style',
+          require.resolve('style-loader'),
           ...cssLoaders.noCSSModules,
         ],
       },
@@ -211,7 +211,7 @@ export function getCSSRules(env, {config, paths, cssLoaders, theme}) {
         test: /\.less$/,
         include,
         use: [
-          'style',
+          require.resolve('style-loader'),
           ...cssLoaders.noCSSModules,
           {
             loader: 'less',
@@ -231,7 +231,7 @@ export function getCSSRules(env, {config, paths, cssLoaders, theme}) {
         test: /\.(scss|sass)$/,
         include: includeTest.bind(null, paths.appSrc),
         use: [
-          'style',
+          require.resolve('style-loader'),
           ...cssLoaders.own,
           {
             loader: 'sass',
@@ -243,7 +243,7 @@ export function getCSSRules(env, {config, paths, cssLoaders, theme}) {
         test: /\.(scss|sass)$/,
         include: includeTest.bind(null, paths.appNodeModules),
         use: [
-          'style',
+          require.resolve('style-loader'),
           ...cssLoaders.nodeModules,
           {
             loader: 'sass',
@@ -346,7 +346,7 @@ export function getCommonPlugins({config, paths, appBuild, NODE_ENV}) {
     ret.push(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/));
   }
 
-  ret.push(new webpack.LoaderOptionsPlugin({
+  /*ret.push(new webpack.LoaderOptionsPlugin({
     options: {
       context: __dirname,
       postcss: [
@@ -362,7 +362,7 @@ export function getCommonPlugins({config, paths, appBuild, NODE_ENV}) {
         ...(config.extraPostCSSPlugins ? config.extraPostCSSPlugins : []),
       ],
     },
-  }));
+  }));*/
 
   return ret;
 }
