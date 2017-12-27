@@ -204,7 +204,7 @@ function doneHandler(previousSizeMap, argv, resolve, err, stats) {
     console.log();
   }
 
-  console.log("doneCallback", config.doneCallback);
+  console.log("doneCallback", config);
   if (config.doneCallback) {
     const doneCallback = config.doneCallback;
     const paths = getPaths(argv.cwd);
