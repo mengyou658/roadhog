@@ -211,10 +211,10 @@ function doneHandler(previousSizeMap, argv, resolve, err, stats) {
   if (config.doneCallback) {
     const doneCallback = config.doneCallback;
     const paths = getPaths(argv.cwd);
-    resolve(doneCallback(config, paths));
-  } else {
-    resolve();
+    console.log("doneCallback");
+    doneCallback(config, paths)
   }
+  resolve();
 }
 
 // Create the production build and print the deployment instructions.
