@@ -208,7 +208,13 @@ function doneHandler(previousSizeMap, argv, resolve, err, stats) {
     console.log();
   }
 
-  resolve();
+  if (config.doneCallback) {
+    const doneCallback = config.doneCallback;
+    const paths = getPaths(argv.cwd);
+    resolve(doneCallback(config, paths));
+  } else {
+    resolve();
+  }
 }
 
 // Create the production build and print the deployment instructions.

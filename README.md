@@ -138,7 +138,7 @@ export default {
 
 默认配置：
 
-```json
+```js
 {
   "entry": "src/index.js",
   "disableCSSModules": false,
@@ -172,6 +172,9 @@ export default {
   "define": null,
   "env": null,
   "theme": null,
+  "doneCallback": (config, paths) => {
+    console.log("all done")
+  },
 }
 ```
 
@@ -263,6 +266,8 @@ js文件：assets/js
 ### copyConfig
 
 执行文件的复制，详细配置请参考https://github.com/webpack-contrib/copy-webpack-plugin配置
+注意这里使用的webpack-plugin所以是不能复制编译完毕的文件到其他目录中
+如果想在编译完毕后做一些操作，请参考配置：doneCallback
 
 ```js
 {
@@ -273,6 +278,54 @@ js文件：assets/js
       "force": true,
       }
     ],
+}
+```
+### doneCallback
+
+在编译完毕后做一些操作(比如复制文件到指定的目录), doneCallback必须为回调函数
+
+传递两个参数：
+config：配置信息
+paths：{
+          appBuild: resolveApp('dist'),
+          appPublic: resolveApp('public'),
+          appPackageJson: resolveApp('package.json'),
+          appSrc: resolveApp('src'),
+          appNodeModules: resolveApp('node_modules'),
+          ownNodeModules: resolveOwn('../../node_modules'),
+          dllNodeModule: resolveApp('node_modules/roadhog-dlls'),
+          dllManifest: resolveApp('node_modules/roadhog-dlls/roadhog.json'),
+          appBabelCache: resolveApp('node_modules/.cache/babel-loader'),
+          resolveApp,
+          appDirectory,
+        }
+
+```js
+import fs from 'fs-extra';
+import path, {resolve} from 'path';
+import glob from 'glob';
+
+{
+    "doneCallback": (config, paths) => {
+        console.log("all done");
+        const appDirectory = paths.appDirectory;
+        fs.copy(path.resolve("./dist/**/*.ftl"))
+        const baseSrcPath = path.resolve(appDirectory, "./dist")
+        glob(baseSrcPath + "/**/*.ftl", function (er, files) {
+          // files is an array of filenames.
+          // If the `nonull` option is set, and nothing
+          // was found, then files is ["**/*.js"]
+          // er is an error object or null.
+          // console.log(files)
+          files.forEach((file) => {
+            const tmpDir = path.relative(baseSrcPath, file);
+            // console.log(baseSrcPath, file, tmpDir)
+            fsExtra.copySync(file, path.resolve(appDirectory, "../webapp/", tmpDir) )
+          })
+        })
+    
+        fsExtra.copy(path.resolve(appDirectory, "./dist/assets"), path.resolve(appDirectory, "../webapp/") )
+      },
 }
 ```
 
