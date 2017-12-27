@@ -178,8 +178,6 @@ function doneHandler(previousSizeMap, argv, resolve, err, stats) {
     return;
   }
 
-  console.log((stats.stats || stats).toJson())
-
   runArray(stats.stats || stats, (item) => {
     if (item.compilation.errors.length) {
       printErrors('Failed to compile.', item.compilation.errors);
@@ -208,10 +206,10 @@ function doneHandler(previousSizeMap, argv, resolve, err, stats) {
     console.log();
   }
 
+  console.log("doneCallback", config.doneCallback);
   if (config.doneCallback) {
     const doneCallback = config.doneCallback;
     const paths = getPaths(argv.cwd);
-    console.log("doneCallback");
     doneCallback(config, paths)
   }
   resolve();
