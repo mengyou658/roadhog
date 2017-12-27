@@ -204,11 +204,11 @@ function doneHandler(previousSizeMap, argv, resolve, err, stats) {
     console.log();
   }
 
-  console.log("doneCallback", config);
-  if (config.doneCallback) {
-    const doneCallback = config.doneCallback;
+  console.log("doneCallback", rcConfig.doneCallback);
+  if (rcConfig.doneCallback) {
+    const doneCallback = rcConfig.doneCallback;
     const paths = getPaths(argv.cwd);
-    doneCallback(config, paths)
+    doneCallback(rcConfig, paths)
   }
   resolve();
 }
