@@ -113,6 +113,7 @@
     "eslint-plugin-react": "^7.0.1",
     "expect": "^22.0.3",
     "got": "^8.0.1",
+    "graceful-fs": "^4.1.11",
     "husky": "^0.14.3",
     "node-sass": "^4.5.3",
     "nyc": "^11.4.1",

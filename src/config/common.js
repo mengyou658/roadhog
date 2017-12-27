@@ -323,15 +323,23 @@ export function getCommonPlugins({config, paths, appBuild, NODE_ENV}) {
     defaultHtml()
   }
 
-
-  if (existsSync(paths.appPublic)) {
-    ret.push(new CopyWebpackPlugin([
-      {
+  let copyConfig = []
+  if(NODE_ENV === 'production' && config.copyConfig) {
+    runArray(config.copyConfig, c => {
+      copyConfig.push(c)
+    })
+  } else {
+    if (existsSync(paths.appPublic)) {
+      copyConfig.push({
         from: paths.appPublic,
         to: appBuild,
-      },
-    ]));
+      })
+    }
   }
+  if(copyConfig && copyConfig.length > 0) {
+    ret.push(new CopyWebpackPlugin(copyConfig));
+  }
+
 
   if (config.multipage) {
     // Support hash

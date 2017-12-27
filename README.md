@@ -151,6 +151,12 @@ export default {
       "css": "assets/css/",
       "img": "assets/images/",
     },
+    "copyConfig": [
+      {
+      "from": "./public",
+      "to": "./dist"
+      }
+    ],
   "babelExclude": [],
   "outputPath": "./dist",
   "extraBabelPlugins": [],
@@ -251,6 +257,22 @@ js文件：assets/js
       "css": 'assets/css/',
       "img": 'assets/images/',
     },
+}
+```
+
+### copyConfig
+
+执行文件的复制，详细配置请参考https://github.com/webpack-contrib/copy-webpack-plugin配置
+
+```js
+{
+    "copyConfig": [
+      {
+      "from": "./public",
+      "to": "./dist",
+      "force": true,
+      }
+    ],
 }
 ```
 
