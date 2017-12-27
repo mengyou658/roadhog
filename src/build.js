@@ -204,8 +204,8 @@ function doneHandler(previousSizeMap, argv, resolve, err, stats) {
     console.log();
   }
 
-  console.log("doneCallback", rcConfig.doneCallback);
   if (rcConfig.doneCallback) {
+    console.log("doneCallback");
     const doneCallback = rcConfig.doneCallback;
     const paths = getPaths(argv.cwd);
     doneCallback(rcConfig, paths)
