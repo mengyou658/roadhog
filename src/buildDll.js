@@ -10,8 +10,6 @@ import stripAnsi from 'strip-ansi';
 import getPaths from './config/paths';
 import getConfig from './utils/getConfig';
 import applyWebpackConfig, { warnIfExists } from './utils/applyWebpackConfig';
-const gracefulFs = require('graceful-fs');
-gracefulFs.gracefulify(fs);
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 const argv = require('yargs')
