@@ -309,7 +309,6 @@ import glob from 'glob';
     "doneCallback": (config, paths) => {
         console.log("all done");
         const appDirectory = paths.appDirectory;
-        fs.copy(path.resolve("./dist/**/*.ftl"))
         const baseSrcPath = path.resolve(appDirectory, "./dist")
         glob(baseSrcPath + "/**/*.ftl", function (er, files) {
           // files is an array of filenames.
@@ -320,11 +319,11 @@ import glob from 'glob';
           files.forEach((file) => {
             const tmpDir = path.relative(baseSrcPath, file);
             // console.log(baseSrcPath, file, tmpDir)
-            fsExtra.copySync(file, path.resolve(appDirectory, "../webapp/", tmpDir) )
+            fs.copySync(file, path.resolve(appDirectory, "../webapp/", tmpDir) )
           })
         })
     
-        fsExtra.copy(path.resolve(appDirectory, "./dist/assets"), path.resolve(appDirectory, "../webapp/") )
+        fs.copy(path.resolve(appDirectory, "./dist/assets"), path.resolve(appDirectory, "../webapp/") )
       },
 }
 ```
