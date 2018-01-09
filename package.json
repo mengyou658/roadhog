@@ -1,6 +1,6 @@
 {
-  "name": "roadhog",
-  "version": "2.0.6",
+  "name": "roadhog-extra",
+  "version": "2.0.6.1",
   "description": "Cli tool for creating react apps, configurable version of create-react-app.",
   "bin": {
     "roadhog": "./bin/roadhog.js"
@@ -13,11 +13,12 @@
     "webpack"
   ],
   "authors": [
-    "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"
+    "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)",
+    "mengyou658 <mengyou658@163.com> (https://github.com/mengyou658)"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sorrycc/roadhog/issues"
+    "url": "https://github.com/mengyou658/roadhog/issues"
   },
   "files": [
     "bin",
