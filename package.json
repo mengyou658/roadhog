@@ -1,6 +1,6 @@
 {
   "name": "roadhog-extra",
-  "version": "2.0.6.1",
+  "version": "2.0.6-2",
   "description": "Cli tool for creating react apps, configurable version of create-react-app.",
   "bin": {
     "roadhog": "./bin/roadhog.js"
@@ -42,7 +42,7 @@
     "@babel/core": "7.0.0-beta.31",
     "@babel/polyfill": "7.0.0-beta.31",
     "@babel/runtime": "7.0.0-beta.31",
-    "af-webpack": "^0.13.14",
+    "af-webpack-extra": "^0.13.19-3",
     "atool-monitor": "^0.4.3",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-umi": "^0.2.0",
