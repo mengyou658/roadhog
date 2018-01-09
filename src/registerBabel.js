@@ -1,5 +1,5 @@
 import { join } from 'path';
-import registerBabel from 'af-webpack/registerBabel';
+import registerBabel from 'af-webpack-extra/registerBabel';
 import winPath from './utils/winPath';
 import excapeRegExp from 'lodash.escaperegexp';
 

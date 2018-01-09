@@ -2,7 +2,7 @@ import { join, basename, sep } from 'path';
 import { existsSync } from 'fs';
 import glob from 'glob';
 import isPlainObject from 'is-plain-object';
-import { webpackHotDevClientPath } from 'af-webpack/react-dev-utils';
+import { webpackHotDevClientPath } from 'af-webpack-extra/react-dev-utils';
 
 // entry 支持 4 种格式：
 //

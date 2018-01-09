@@ -1,6 +1,6 @@
 import { resolve } from 'path';
-import build from 'af-webpack/build';
-import getConfig from 'af-webpack/getUserConfig';
+import build from 'af-webpack-extra/build';
+import getConfig from 'af-webpack-extra/getUserConfig';
 import getWebpackConfig from './getWebpackConfig';
 import getPaths from './getPaths';
 import registerBabel from './registerBabel';

@@ -216,6 +216,17 @@ e.g.
   "template": "./src/index.ejs"
 }
 ```
+or
+```markup
+"html": [
+{
+  "template": "./src/index.ejs"
+},
+{
+  "template": "./src/index2.ejs"
+},
+]
+```
 
 ### disableCSSModules
 

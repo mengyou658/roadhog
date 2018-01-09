@@ -211,6 +211,17 @@ export default {
   "template": "./src/index.ejs"
 }
 ```
+or
+```markup
+"html": [
+{
+  "template": "./src/index.ejs"
+},
+{
+  "template": "./src/index2.ejs"
+},
+]
+```
 
 ### disableCSSModules
 
@@ -333,3 +344,7 @@ roadhog 即路霸，和 [dva](https://github.com/dvajs/dva) 一样，是守望�
 ## LICENSE
 
 MIT
+
+## CHANGELOG
+
+* 修改html配置可以支持数组（多页面输入和输出，具体参考html-webpack-plugin）

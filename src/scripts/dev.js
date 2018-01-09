@@ -1,3 +1,3 @@
-import fork from 'af-webpack/lib/fork';
+import fork from 'af-webpack-extra/lib/fork';
 
 fork(require.resolve('./realDev.js'));

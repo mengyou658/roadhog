@@ -1,10 +1,10 @@
 import { resolve } from 'path';
-import dev from 'af-webpack/dev';
+import dev from 'af-webpack-extra/dev';
 import chalk from 'chalk';
 import getConfig, {
   watchConfigs,
   unwatchConfigs,
-} from 'af-webpack/getUserConfig';
+} from 'af-webpack-extra/getUserConfig';
 import getWebpackConfig from './getWebpackConfig';
 import getPaths from './getPaths';
 import registerBabel from './registerBabel';

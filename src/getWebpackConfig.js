@@ -1,4 +1,4 @@
-import getConfig from 'af-webpack/getConfig';
+import getConfig from 'af-webpack-extra/getConfig';
 import defaultBrowsers from './defaultConfigs/browsers';
 import getEntry from './utils/getEntry';
 
