@@ -1,5 +1,5 @@
 {
-  "name": "roadhog",
+  "name": "roadhog-extra",
   "version": "1.3.3.2",
   "description": "Cli tool for serve and build react app, based on create-react-app, support JSON pattern config.",
   "bin": {
@@ -13,11 +13,11 @@
     "webpack"
   ],
   "authors": [
-    "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"
+    "mengyou658 <mengyou658@163.com> (https://github.com/mengyou658)"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sorrycc/roadhog/issues"
+    "url": "https://github.com/mengyou658/roadhog/issues"
   },
   "files": [
     "bin",
