@@ -106,6 +106,7 @@ export default {
 * [ignoreMomentLocale](#ignoremomentlocale)
 * [disableDynamicImport](#disabledynamicimport)
 * [env](#env)
+* [doneCallback](#doneCallback)
 
 ### entry
 
@@ -196,6 +197,8 @@ export default {
       }
       return count >= pageCount * 0.5;
     },
+    name: 'common',
+    filename: 'assets/js/' + name + '.js'
   },
 ]
 ```
@@ -214,13 +217,44 @@ export default {
 or
 ```markup
 "html": [
-{
-  "template": "./src/index.ejs"
-},
-{
-  "template": "./src/index2.ejs"
-},
-]
+    {
+    inject: false,
+    template: require('html-webpack-template'),
+    appMountId: "root",
+    scripts: [
+      "http://res.wx.qq.com/open/js/jweixin-1.2.0.js"
+    ],
+    lang: "zh-CN",
+    mobile: true,
+    title: 'title',
+    hash: false,
+    links: [
+      {
+        href: IMG_BASE + 'assets/favicon.ico',
+        rel: 'shortcut icon'
+      }
+    ],
+    filename: DEBUG ? 'index.html' : "index.ftl",
+    bodyHtmlSnippet: '',
+    "window": windowVars,
+    chunks: ['index', 'common'],
+    minify: {
+      collapseWhitespace: true,
+      conservativeCollapse: true,
+      preserveLineBreaks: true,
+      removeComments: true
+      // more options:
+      // https://github.com/kangax/html-minifier#options-quick-reference
+    },
+    {
+      inject: true,
+      template: 'src/demo.ejs',
+      hash: false,
+      favicon: 'public/favicon.ico',
+      filename: 'demo.html',
+      chunks: ['demo', 'common'],
+    }
+  ]
 ```
 
 ### disableCSSModules
@@ -310,6 +344,42 @@ or
 }
 ```
 
+### doneCallback
+
+用于编译完成后的文件复制等操作
+
+
+```markup
+import fs from 'fs-extra';
+import path, {resolve} from 'path';
+"doneCallback": ({cwd,
+            config,
+            babel,
+            paths,
+            stats, 
+            warnings,
+            resolve
+          }) => {
+              console.log("all done");
+              const appDirectory = paths.appDirectory;
+              const baseSrcPath = path.resolve(appDirectory, "./dist")
+              glob(baseSrcPath + "/**/*.ftl", function (er, files) {
+                // files is an array of filenames.
+                // If the `nonull` option is set, and nothing
+                // was found, then files is ["**/*.js"]
+                // er is an error object or null.
+                // console.log(files)
+                files.forEach((file) => {
+                  const tmpDir = path.relative(baseSrcPath, file);
+                  // console.log(baseSrcPath, file, tmpDir)
+                  fs.copySync(file, path.resolve(appDirectory, "../src/main/webapp/", tmpDir) )
+                })
+              })
+          
+              fs.copy(path.resolve(appDirectory, "./dist/assets"), path.resolve(appDirectory, "../src/main/webapp/assets/") )
+          }
+```
+
 这样，开发环境下的 extraBabelPlugins 是?`["transform-runtime", "dva-hmr"]`，而生产环境下是?`["transform-runtime"]`。
 
 ## 环境变量
@@ -347,4 +417,70 @@ MIT
 
 ## CHANGELOG
 
-* 修改html配置可以支持数组（多页面输入和输出，具体参考html-webpack-plugin）
+1. 修改html配置可以支持数组（多页面输入和输出，具体参考html-webpack-plugin）
+```markup
+{
+"html": [
+    {
+    inject: false,
+    template: require('html-webpack-template'),
+    appMountId: "root",
+    scripts: [
+      "http://res.wx.qq.com/open/js/jweixin-1.2.0.js"
+    ],
+    lang: "zh-CN",
+    mobile: true,
+    title: 'title',
+    hash: false,
+    links: [
+      {
+        href: IMG_BASE + 'assets/favicon.ico',
+        rel: 'shortcut icon'
+      }
+    ],
+    filename: DEBUG ? 'index.html' : "index.ftl",
+    bodyHtmlSnippet: '',
+    "window": windowVars,
+    chunks: ['index', 'common'],
+    minify: {
+      collapseWhitespace: true,
+      conservativeCollapse: true,
+      preserveLineBreaks: true,
+      removeComments: true
+      // more options:
+      // https://github.com/kangax/html-minifier#options-quick-reference
+    },
+    {
+      inject: true,
+      template: 'src/demo.ejs',
+      hash: false,
+      favicon: 'public/favicon.ico',
+      filename: 'demo.html',
+      chunks: ['demo', 'common'],
+    }
+  ]
+}
+```
+1. doneCallback 参数
+ 
+    用于编译完成后的文件复制等操作
+    
+1. assetsPath 参数
+ 
+    配置各类型文件目录结构，用于归类
+    资源输出路径，默认：
+    图片资源：assets/img
+    css文件：assets/css
+    js文件：assets/js
+    其他文件: assets/media
+    
+  ```markup
+  {
+    "assetsPath": {
+        "media": 'assets/media/',
+        "js": 'assets/js/',
+        "css": 'assets/css/',
+        "img": 'assets/images/',
+      },
+  }
+  ```

@@ -886,9 +886,9 @@ address@1.0.3, address@^1.0.1:
   version "1.0.3"
   resolved "http://registry.npm.taobao.org/address/download/address-1.0.3.tgz#b5f50631f8d6cec8bd20c963963afb55e06cbce9"
 
-af-webpack-extra@^0.13.19-3:
-  version "0.13.19-3"
-  resolved "https://registry.yarnpkg.com/af-webpack-extra/-/af-webpack-extra-0.13.19-3.tgz#c730cd19049346e9af9ec31b6b4558834530a928"
+af-webpack-extra@^0.13.19-4:
+  version "0.13.19-4"
+  resolved "https://registry.yarnpkg.com/af-webpack-extra/-/af-webpack-extra-0.13.19-4.tgz#ba97531a294b466a473b6ecba42013f3efc74c9c"
   dependencies:
     "@babel/core" "7.0.0-beta.31"
     "@babel/plugin-transform-modules-commonjs" "7.0.0-beta.31"

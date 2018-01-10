@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import {resolve} from 'path';
 import build from 'af-webpack-extra/build';
 import getConfig from 'af-webpack-extra/getUserConfig';
 import getWebpackConfig from './getWebpackConfig';
@@ -7,8 +7,8 @@ import registerBabel from './registerBabel';
 
 const debug = require('debug')('roadhog:build');
 
-export default function(opts = {}) {
-  const { cwd = process.cwd(), watch } = opts;
+export default function (opts = {}) {
+  const {cwd = process.cwd(), watch} = opts;
 
   const babel = resolve(__dirname, './babel.js');
   const paths = getPaths(cwd);
@@ -21,7 +21,7 @@ export default function(opts = {}) {
     });
 
     // get user config
-    const { config } = getConfig({ cwd });
+    const {config} = getConfig({cwd});
     debug(`user config: ${JSON.stringify(config)}`);
 
     // get webpack config
@@ -35,7 +35,16 @@ export default function(opts = {}) {
     build({
       webpackConfig,
       watch,
-      success: resolve,
+      success: config.doneCallback ? (params) => {
+        config.doneCallback({
+          cwd,
+          config,
+          babel,
+          paths,
+          ...params,
+          resolve
+        })
+      } : resolve,
     });
   });
 }
