@@ -636,3 +636,12 @@ MIT
     
     使用[html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)来支持多文件
     包括不同的文件切割，自定义模板，具体请参考 htmlTemplates配置
+    
+1. assetsPath 参数
+ 
+    配置各类型文件目录结构，用于归类
+    资源输出路径，默认：
+    图片资源：assets/img
+    css文件：assets/css
+    js文件：assets/js
+    其他文件: assets/media
