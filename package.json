@@ -1,6 +1,6 @@
 {
   "name": "roadhog-extra",
-  "version": "1.3.3.2",
+  "version": "1.3.3-3",
   "description": "Cli tool for serve and build react app, based on create-react-app, support JSON pattern config.",
   "bin": {
     "roadhog": "./bin/roadhog.js"
@@ -13,6 +13,7 @@
     "webpack"
   ],
   "authors": [
+    "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)",
     "mengyou658 <mengyou658@163.com> (https://github.com/mengyou658)"
   ],
   "license": "MIT",
@@ -22,7 +23,9 @@
   "files": [
     "bin",
     "src",
-    "lib"
+    "lib",
+    "package.json",
+    "README.md"
   ],
   "scripts": {
     "build": "rimraf lib && babel src --out-dir lib",

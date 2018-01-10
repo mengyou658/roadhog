@@ -225,12 +225,33 @@ export default {
 {
 "htmlTemplates": [
     {
-      inject: true,
-      template: 'src/index.ejs',
-      hash: false,
-      favicon: 'public/favicon.ico',
-      filename: 'index.html',
-      chunks: ['index', 'common'],
+    inject: false,
+    template: require('html-webpack-template'),
+    appMountId: "root",
+    scripts: [
+      "http://res.wx.qq.com/open/js/jweixin-1.2.0.js"
+    ],
+    lang: "zh-CN",
+    mobile: true,
+    title: 'title',
+    hash: false,
+    links: [
+      {
+        href: IMG_BASE + 'assets/favicon.ico',
+        rel: 'shortcut icon'
+      }
+    ],
+    filename: DEBUG ? 'index.html' : "index.ftl",
+    bodyHtmlSnippet: '',
+    "window": windowVars,
+    chunks: ['index', 'common'],
+    minify: {
+      collapseWhitespace: true,
+      conservativeCollapse: true,
+      preserveLineBreaks: true,
+      removeComments: true
+      // more options:
+      // https://github.com/kangax/html-minifier#options-quick-reference
     },
     {
       inject: true,
@@ -603,3 +624,15 @@ $ cross-env BROWSER=none roadhog server
 ## LICENSE
 
 MIT
+
+## CHANGE LOG
+1. doneCallback 参数
+ 
+    用于编译完成后的文件复制等操作
+1. copyConfig 参数
+  
+    用于拷贝其他一些多余的文件，再webpack执行的时候，使用插件https://github.com/webpack-contrib/copy-webpack-plugin，注意，此参数是在webpack执行中间执行的，上面的doneCallback参数实在webpack执行完毕后执行的
+1. htmlTemplates 参数
+    
+    使用[html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)来支持多文件
+    包括不同的文件切割，自定义模板，具体请参考 htmlTemplates配置
